@@ -1,0 +1,10 @@
+#mysql_host: 'db'
+#mysql_user: 'nclouds_user'
+#mysql_password: 'secretpwfornclouds'
+#mysql_db: 'nclouds'
+
+mariadb_host: "db"
+mariadb_port: 3306
+mariadb_user: "nclouds_user"
+mariadb_password: "secretpwfornclouds"
+mariadb_db: "nclouds"

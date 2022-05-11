@@ -1,0 +1,44 @@
+services:
+  web:
+    container_name: web
+    image: nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - redis
+      - db
+      - app
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+  redis:
+    container_name: redis
+    image: redis:alpine
+  db:
+    container_name: db
+    image: lscr.io/linuxserver/mariadb:latest
+    volumes:
+      - ./config/init.sql:/config/initdb.d/init.sql
+    restart: always
+    secrets:
+      - db_root_pw
+      - db_user_pw
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - FILE__MYSQL_ROOT_PASSWORD=/run/secrets/db_root_pw
+      - TZ=America/Los_Angeles
+      - MYSQL_DATABASE=nclouds
+      - MYSQL_USER=nclouds_user
+      - FILE__MYSQL_PASSWORD=/run/secrets/db_user_pw
+  app:
+    container_name: app
+    build: .
+    ports:
+      - 5001:5000
+    volumes:
+      - .:/code
+secrets:
+  db_root_pw:
+    file: ./config/db_root_pw.txt
+  db_user_pw:
+    file: ./config/db_user_pw.txt

@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Docker Project nClouds</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+
+  <body>
+    <div class="content">
+      <form method="POST">
+        <h3>Docker Project</h3>
+        <div class="inputs">
+          <label>Name: </label>
+          <input type="text" name="name" class="inp" value="" required/>
+        </div>
+        <div class = "inputs">
+          <label>Email: </label>
+          <input type="email" name="email" class="inp" value="" />
+        </div>
+        <div class="inputs">
+          <label>Password: </label>
+          <input type="password" name="password" class="inp" value="" />
+        </div>
+      </br>
+      <div class="buttonclass">
+        <input type="submit" name="sql_submit" class="Buttons" value="Save to SQL">
+        <input type="submit" name="redis_submit" class="Buttons" value="Save to Cache">
+      </div>
+      </form>
+
+      <p class="Results">Items stored in SQL: <span class="totals">{{sqlInputTotal}}</span></p>
+      <p class="Results">Items stored in Cache: <span class="totals">{{redisTotal}}</span></p>
+    </div>
+  </body>
+</html>

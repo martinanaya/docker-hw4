@@ -1,0 +1,38 @@
+.content {
+  max-width: 300px;
+  margin: auto;
+}
+
+form {
+  font-size: medium;
+  display: block;
+}
+
+form h3 {
+  text-align: center;
+}
+
+form label{
+  float: left;
+  width: 60px;
+  padding-right: 10px;
+  text-align: left;
+  margin-top: 5px;
+}
+form .inputs .inp {
+  height: 25px;
+}
+
+.Buttons {
+  background-color: black;
+  color: white;
+  padding: 5px;
+}
+
+.buttonclass {
+  text-align: center;
+}
+
+.Results .totals {
+  font-weight: bold;
+}
