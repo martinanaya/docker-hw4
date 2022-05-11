@@ -20,10 +20,17 @@ The Dockerfile uses a python image and copies all files into the /code folder. T
 The actual application is built with Python. Configuration can be found in app.py.
 
 To launch the containers, clone the repository to your computer and run the docker-compose file.
+
 Example:
+
  mkdir test-app
+ 
  cd test-app
+ 
  git clone https://github.com/martinanaya/docker-hw4
+ 
  cd docker-hw4
+ 
  docker-compose up --build
+ 
 (Note: --build is optional. This will enforce a rebuild if you change any parameters or configurations.)
