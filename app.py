@@ -21,6 +21,26 @@ def get_hit_count():
             retries -= 1
             time.sleep(0.5)
 
+def get_count_only():
+    retries = 5
+    while True:
+        try:
+            return cache.get('hits').decode('utf-8')
+        except redis.exceptions.ConnectionError as exc:
+                if retries == 0:
+                    raise exc
+                retries -= 1
+                time.sleep(0.5)
+
+def db_connection():
+    conn = mariadb.connect(
+    host="db",
+    user="nclouds_user",
+    password="secretpwfornclouds",
+    database="nclouds"
+    )
+    conn.autocommit = True
+    return conn
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -33,13 +53,7 @@ def index():
             password = request.form.get('password')
             # Connect to SQL Database
             try:
-                conn = mariadb.connect(
-                host="db",
-                user="nclouds_user",
-                password="secretpwfornclouds",
-                database="nclouds"
-                )
-                conn.autocommit = True
+                conn = db_connection()
             except mariadb.Error as e:
                 return render_template('index.html',sqlInputTotal="SQL Connection Error")
                 sys.exit(1)
@@ -63,7 +77,7 @@ def index():
             conn.close()
             #Grab current REDIS total
             try:
-                redisTotal = cache.get('hits').decode('utf-8')
+                redisTotal = get_count_only()
             except:
                 redisTotal = 0
             #Reload same page with new counts
@@ -74,13 +88,7 @@ def index():
             redisTotal = get_hit_count()
             # Grab SQL Count
             try:
-                conn = mariadb.connect(
-                host="db",
-                user="nclouds_user",
-                password="secretpwfornclouds",
-                database="nclouds"
-                )
-                conn.autocommit = True
+                conn = db_connection()
             except mariadb.Error as e:
                 return render_template('index.html',sqlInputTotal="SQL Connection Error")
                 sys.exit(1)
