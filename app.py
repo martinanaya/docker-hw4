@@ -21,6 +21,7 @@ def get_hit_count():
             retries -= 1
             time.sleep(0.5)
 
+#Get REDIT count
 def get_count_only():
     retries = 5
     while True:
@@ -32,15 +33,24 @@ def get_count_only():
                 retries -= 1
                 time.sleep(0.5)
 
+#Connect to DB
 def db_connection():
-    conn = mariadb.connect(
-    host="db",
-    user="nclouds_user",
-    password="secretpwfornclouds",
-    database="nclouds"
-    )
-    conn.autocommit = True
-    return conn
+    retries = 5
+    while True:
+        try:
+            conn = mariadb.connect(
+            host="db",
+            user="nclouds_user",
+            password="secretpwfornclouds",
+            database="nclouds"
+            )
+            conn.autocommit = True
+            return conn
+        except:
+            if retries == 0:
+                raise exc
+            retries -= 1
+            time.sleep(0.5)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
